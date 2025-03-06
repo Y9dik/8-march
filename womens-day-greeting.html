@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>С 8 марта, Миланка!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f8bbd0, #e1bee7, #bbdefb);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .container {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            z-index: 2;
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        h1 {
+            color: #d81b60;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s infinite;
+        }
+        
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .photo-container {
+            position: relative;
+            width: 250px;
+            height: 300px;
+            margin: 0 auto;
+        }
+        
+        .photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 5px solid #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .photo:hover {
+            transform: scale(1.05);
+        }
+        
+        .sticker {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            bottom: -30px;
+            right: -30px;
+            animation: bounce 2s ease infinite;
+            z-index: 3;
+            border-radius: 50%;
+        }
+        
+        .flowers {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .flower {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .heart {
+            position: absolute;
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff4081"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat center center;
+            opacity: 0;
+            animation: heartFall linear infinite;
+        }
+        
+        @keyframes heartFall {
+            0% { transform: translateY(-100px) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.5; }
+            100% { transform: translateY(100vh) translateX(100px) rotate(180deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    <div class="container">
+        <h1>С 8 марта тебя Миланка</h1>
+        <div class="content">
+            <div class="photo-container">
+                <img src="\C:\Users\Homa\Desktop\С 8 марта\img\IMG_3516.JPG" alt="placeholder" class="photo" id="photo"/>
+                <img src="\C:\Users\Homa\Desktop\С 8 марта\img\фыавы.png" alt="Смайлик" class="sticker" id="sticker"/>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Create falling flowers
+        const flowerColors = ['#f06292', '#ba68c8', '#64b5f6', '#4dd0e1', '#81c784'];
+        const flowers = document.createElement('div');
+        flowers.className = 'flowers';
+        document.body.appendChild(flowers);
+        
+        for (let i = 0; i < 30; i++) {
+            const flower = document.createElement('div');
+            flower.className = 'flower';
+            flower.style.left = `${Math.random() * 100}%`;
+            flower.style.backgroundColor = flowerColors[Math.floor(Math.random() * flowerColors.length)];
+            flower.style.width = `${10 + Math.random() * 20}px`;
+            flower.style.height = flower.style.width;
+            flower.style.borderRadius = '50%';
+            flower.style.animationDuration = `${5 + Math.random() * 10}s`;
+            flower.style.animationDelay = `${Math.random() * 5}s`;
+            flowers.appendChild(flower);
+        }
+        
+        // Create hearts
+        const heartsContainer = document.getElementById('hearts');
+        
+        for (let i = 0; i < 20; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.opacity = Math.random() * 0.5 + 0.3;
+            heart.style.animationDuration = `${10 + Math.random() * 15}s`;
+            heart.style.animationDelay = `${Math.random() * 5}s`;
+            heartsContainer.appendChild(heart);
+        }
+        
+        // Simulate background animation
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.heart').forEach(heart => {
+                heart.style.animationPlayState = 'running';
+            });
+        });
+    </script>
+</body>
+</html>
